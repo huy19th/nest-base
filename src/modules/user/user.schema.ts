@@ -4,6 +4,7 @@ import { HydratedDocument } from 'mongoose';
 import { MongoError } from 'mongodb';
 import normalizeEmail from 'normalize-email';
 import { hash, compare } from 'bcrypt';
+import { ROLE_USER } from './user.constant';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -36,6 +37,12 @@ export class User {
         type: String
     })
     username?: string;
+
+    @Prop({
+        type: Number,
+        default: ROLE_USER
+    })
+    role: number;
 
 }
 

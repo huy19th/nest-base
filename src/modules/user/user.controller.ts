@@ -2,6 +2,8 @@ import { Controller, Param, Body, Get, Post, Patch, Delete } from '@nestjs/commo
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UserService } from './user.service';
 import { UserDocument } from './user.schema';
+import { Roles } from '../auth/auth.decorator';
+import { ROLE_ADMIN } from './user.constant';
 
 @Controller('user')
 export class UsersController {
@@ -14,6 +16,7 @@ export class UsersController {
         return profile;
     }
 
+    @Roles(ROLE_ADMIN)
     @Post()
     async createUser(@Body() body: CreateUserDto): Promise<UserDocument> {
         const user: UserDocument = await this.UserService.create(body);
