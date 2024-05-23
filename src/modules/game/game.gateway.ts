@@ -22,7 +22,8 @@ import { UserSocket } from '../user/user.type';
     { // connect options
         namespace: '/game', // add '/game' suffix to connection url
         // path: '/game', add '/game' suffix to handshake path
-        cors: { origin: "*" }
+        cors: { origin: "*" },
+        transports: [ "websocket" ]
     }
 )
 export class GameGateWay implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
