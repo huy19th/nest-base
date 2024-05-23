@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { TokenModule } from './providers/token/token.module';
 import { RolesGuard } from './modules/auth/role.guard';
+import { GameModule } from './modules/game/game.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RolesGuard } from './modules/auth/role.guard';
     UserModule,
     AuthModule,
     TokenModule,
+    GameModule,
   ],
   controllers: [AppController],
   providers: [
