@@ -6,6 +6,13 @@ const env = process.env;
 
 const config: Configuration = {
     port: +env.PORT || 8080,
+    mysql: {
+        host: process.env.MYSQL_HOST || 'localhost',
+        port: +process.env.MYSQL_PORT || 1001,
+        username: process.env.MYSQL_USERNAME || 'nest-base',
+        password: process.env.MYSQL_PASSWORD || 'nest-base',
+        database: process.env.MYSQL_DATABASE || 'nest-base'
+    }
 };
 
 export const configuration: ConfigFactory<Configuration> = () => config;
