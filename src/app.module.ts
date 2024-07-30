@@ -7,6 +7,9 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { DataSource } from 'typeorm';
 import { ArtistModule } from './modules/artist/artist.module';
 import { SongModule } from './modules/song/song.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLConfigService } from './config/graphql.config';
 
 @Module({
   imports: [
@@ -14,6 +17,7 @@ import { SongModule } from './modules/song/song.module';
     TypeOrmModule.forRoot(typeOrmConfig),
     ArtistModule,
     SongModule,
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({driver: ApolloDriver, useClass: GraphQLConfigService}),
   ],
   controllers: [AppController],
   providers: [],

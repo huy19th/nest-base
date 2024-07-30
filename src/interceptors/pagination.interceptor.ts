@@ -7,6 +7,7 @@ import {
     InternalServerErrorException
 } from '@nestjs/common';
 import { Request } from 'express';
+import { GqlExecutionContext, GqlContextType } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IPaginatedType } from '../common/types/paginated.type';
@@ -15,7 +16,13 @@ import { IPaginatedType } from '../common/types/paginated.type';
 export class PaginationInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         let limit: number, page: number;
-        if (context.getType() === 'http') {
+        if (context.getType<GqlContextType>() === 'graphql') {
+            const gqlContext = GqlExecutionContext.create(context);
+            const args = gqlContext.getArgs<{ limit: number, page: number }>();
+            limit = args.limit;
+            page = args.page;
+        }
+        else if (context.getType() === 'http') {
             const req = context.switchToHttp().getRequest<Request>();
             limit = +req.query.limit || 10;
             page = +req.query.page || 1;

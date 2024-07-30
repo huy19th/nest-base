@@ -4,6 +4,7 @@ import { SongService } from './song.service';
 import { SongController } from './song.controller';
 import { Song } from './song.entity';
 import { ArtistModule } from '../artist/artist.module';
+import { SongResolver } from './song.resolver';
 
 @Module({
     imports: [
@@ -11,7 +12,10 @@ import { ArtistModule } from '../artist/artist.module';
         ArtistModule,
     ],
     controllers: [SongController],
-    providers: [SongService],
+    providers: [
+        SongService,
+        SongResolver,
+    ],
     exports: [SongService]
 })
 export class SongModule { }
