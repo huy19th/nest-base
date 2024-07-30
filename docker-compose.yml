@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  postgres:
+    container_name: postgresdb
+    image: postgres:15.2-alpine
+    ports:
+      - 1001:5432
+    volumes:
+      - ./data/postgres:/data/postgres
+    environment:
+      POSTGRES_PASSWORD: nest-base
+      POSTGRES_USER: nest-base
+      POSTGRES_DB: nest-base
