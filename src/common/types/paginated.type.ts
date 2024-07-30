@@ -1,4 +1,5 @@
 import { Type } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 
 export interface IPaginatedType<T> {
   items: T[];
@@ -10,9 +11,10 @@ export interface IPaginatedType<T> {
   page: number;
 }
 
-export function Paginated<T>(classRef: Type<T>): Type<IPaginatedType<T>> {
-  abstract class PaginatedType implements IPaginatedType<T> {
-    items: T[];
+export function Paginated(resultType: unknown): any {
+  abstract class PaginatedType {
+    @ApiProperty({isArray: true, type: resultType})
+    items: unknown[];
 
     totalItems: number;
 
@@ -26,5 +28,5 @@ export function Paginated<T>(classRef: Type<T>): Type<IPaginatedType<T>> {
 
     page: number;
   }
-  return PaginatedType as Type<IPaginatedType<T>>;
+  return PaginatedType;
 }

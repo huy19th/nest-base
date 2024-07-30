@@ -15,7 +15,11 @@ import {
     UpdateArtistDto,
 } from './artist.dto';
 import { PaginationInterceptor } from '../../interceptors';
+import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Paginated } from 'src/common/types';
+import { Artist } from './artist.entity';
 
+@ApiTags('artist')
 @Controller('artist')
 export class ArtistController {
 
@@ -31,6 +35,7 @@ export class ArtistController {
         return this.artistService.create(body);
     }
 
+    @ApiResponse({type: () => Paginated(Artist)})
     @UseInterceptors(PaginationInterceptor)
     @Get()
     findArtistsByName(@Query() query: FindArtistsByNameDto) {

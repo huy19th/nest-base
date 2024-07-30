@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { SwaggerModule } from '@nestjs/swagger';
+import { documentConfig, documentOptions, setupOptions } from './config/swagger.config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,6 +18,8 @@ async function bootstrap() {
       enableImplicitConversion: true,
     },
   }));
+  const document = SwaggerModule.createDocument(app, documentConfig, documentOptions);
+  SwaggerModule.setup('api', app, document, setupOptions);
   await app.listen(port);
 }
 bootstrap();

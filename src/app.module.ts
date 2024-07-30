@@ -1,5 +1,4 @@
 import { Module, OnModuleInit } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { ConfigModule } from '@nestjs/config';
 import { configuration } from './config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -15,7 +14,6 @@ import { SongModule } from './modules/song/song.module';
     ArtistModule,
     SongModule,
   ],
-  controllers: [AppController],
   providers: [],
 })
 export class AppModule implements OnModuleInit {

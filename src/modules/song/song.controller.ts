@@ -18,7 +18,9 @@ import {
     UpdateSongByIdDto,
 } from './song.dto';
 import { PaginationInterceptor } from '../../interceptors';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('song')
 @Controller('song')
 export class SongController {
 
