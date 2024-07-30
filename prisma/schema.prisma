@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
+}
+
+model artist {
+  id          String             @id(map: "PK_55b76e71568b5db4d01d3e394ed") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name        String             @db.VarChar(50)
+  gender      artist_gender_enum @default(other)
+  debut       DateTime?          @db.Date
+  artistSongs artistSongs[]
+}
+
+model artistSongs {
+  artistId String @db.Uuid
+  songId   String @db.Uuid
+  song     song   @relation(fields: [songId], references: [id], onDelete: Cascade, map: "FK_626fb9ec5045c7959f2507773d8")
+  artist   artist @relation(fields: [artistId], references: [id], onDelete: Cascade, map: "FK_c5049a5497dc9777076c2b2b8f5")
+
+  @@id([artistId, songId], map: "PK_fc959d152152f271ea54505d18a")
+  @@index([songId], map: "IDX_626fb9ec5045c7959f2507773d")
+  @@index([artistId], map: "IDX_c5049a5497dc9777076c2b2b8f")
+}
+
+model migrations {
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
+}
+
+model song {
+  id          String                @id(map: "PK_baaa977f861cce6ff954ccee285") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  title       String                @db.VarChar(100)
+  releaseDate DateTime?             @db.Date
+  recordType  song_recordtype_enum?
+  createdAt   DateTime              @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime              @default(now()) @db.Timestamp(6)
+  deletedAt   DateTime?             @db.Timestamp(6)
+  artistSongs artistSongs[]
+}
+
+enum artist_gender_enum {
+  male
+  female
+  other
+}
+
+enum song_recordtype_enum {
+  studio
+  live
+  fan_record @map("fan record")
+}
