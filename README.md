@@ -1,0 +1,1 @@
+[VSCode tasks configuration](https://code.visualstudio.com/docs/editor/tasks)
