@@ -2,12 +2,15 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const config = app.get(ConfigService);
+  const port = config.get('server.port');
   app.enableCors();
   app.useBodyParser('json', { limit: '10mb' });
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(1000);
+  await app.listen(port);
 }
 bootstrap();
