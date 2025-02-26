@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { AuthGuard } from './modules/auth/auth.guard';
 import { TokenModule } from './providers/token/token.module';
+import { RolesGuard } from './modules/auth/role.guard';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TokenModule } from './providers/token/token.module';
   providers: [
     AppService,
     { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule { }
