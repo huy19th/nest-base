@@ -4,6 +4,7 @@ import {
   IsPort,
   validateSync,
   IsOptional,
+  IsString,
 } from 'class-validator';
 import { ConfigModuleOptions } from '@nestjs/config';
 
@@ -22,6 +23,14 @@ class EnvironmentVariables {
   @IsOptional()
   @IsPort()
   PORT: string = '1000';
+
+  @IsOptional()
+  @IsString()
+  JWT_SECRET: string = 'nest-base';
+
+  @IsOptional()
+  @IsString()
+  ACCESS_TOKEN_EXPIRY: string = '7d';
 }
 
 function validate(config: Record<string, unknown>) {
@@ -39,6 +48,10 @@ function validate(config: Record<string, unknown>) {
     server: {
       port: env.PORT,
       node_env: env.NODE_ENV,
+    },
+    security: {
+      jwtSecret: env.JWT_SECRET,
+      accessTokenExpiry: env.ACCESS_TOKEN_EXPIRY,
     },
   };
 }
