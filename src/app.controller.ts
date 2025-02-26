@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Render,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 
@@ -9,7 +10,8 @@ export class AppController {
   constructor(private readonly appService: AppService) { }
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Render('index')
+  getHello() {
+    return { message: `A progressive <a href="http://nodejs.org" rel="nofollow">Node.js</a> framework for building efficient and scalable server-side applications.` };
   }
 }

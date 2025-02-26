@@ -6,3 +6,6 @@
 * `npm i -g @nestjs/cli`
 * `nest new project-name`
 * `npm i class-validator class-transformer`
+
+## Template engine
+* `npm i ejs`
