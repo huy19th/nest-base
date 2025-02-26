@@ -9,3 +9,6 @@
 
 ## Config
 * `npm i @nestjs/config`
+
+## Cache
+* `npm i @nestjs/cache-manager cache-manager-redis-yet`
