@@ -9,3 +9,13 @@
 
 ## Config
 * `npm i @nestjs/config`
+
+## nodemailer
+* `npm i nodemailer ejs`
+* `npm i -D @types/nodemailer`
+* inlines the CSS properties into the style attribute:
+
+```
+npm i inline-css
+npm i -D @types/inline-css
+```

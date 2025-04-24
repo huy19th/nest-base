@@ -4,6 +4,8 @@ import {
   IsPort,
   validateSync,
   IsOptional,
+  IsEmail,
+  IsString,
 } from 'class-validator';
 import { ConfigModuleOptions } from '@nestjs/config';
 
@@ -22,6 +24,18 @@ class EnvironmentVariables {
   @IsOptional()
   @IsPort()
   PORT: string = '1000';
+
+  @IsEmail()
+  NODEMAILER_USER: string;
+
+  @IsString()
+  NODEMAILER_PASS: string;
+
+  @IsString()
+  NODEMAILER_HOST: string;
+
+  @IsPort()
+  NODE_MAILER_PORT: string;
 }
 
 function validate(config: Record<string, unknown>) {
@@ -39,6 +53,12 @@ function validate(config: Record<string, unknown>) {
     server: {
       port: env.PORT,
       node_env: env.NODE_ENV,
+    },
+    mailer: {
+      user: env.NODEMAILER_USER,
+      pass: env.NODEMAILER_PASS,
+      host: env.NODEMAILER_HOST,
+      port: env.NODE_MAILER_PORT
     },
   };
 }
