@@ -9,3 +9,6 @@
 
 ## Config
 * `npm i @nestjs/config`
+
+## @nestjs-modules/mailer
+* `npm i @nestjs-modules/mailer`
