@@ -9,3 +9,6 @@
 
 ## Config
 * `npm i @nestjs/config`
+
+## Database
+* `docker compose up -d`

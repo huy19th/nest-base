@@ -10,7 +10,12 @@ async function bootstrap() {
   const port = config.get('server.port');
   app.enableCors();
   app.useBodyParser('json', { limit: '10mb' });
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+  }));
   await app.listen(port);
 }
 bootstrap();
