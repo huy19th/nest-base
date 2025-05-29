@@ -7,21 +7,26 @@ import { BaseEntity } from '../../common/base';
 import { Paginated } from '../../common/dtos';
 import { Artist } from '../artist/artist.entity';
 import { SongRecordType } from './song.constant';
+import { Field, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity()
 export class Song extends BaseEntity {
+    @Field()
     @Column({
         type: 'varchar',
         length: 100,
     })
     title: string;
 
+    @Field()
     @Column({
         type: 'date',
         nullable: true,
     })
     releaseDate: Date;
 
+    @Field(() => [Artist], {nullable: true})
     @ManyToMany(
         () => Artist,
         artist => artist.songs,
@@ -29,6 +34,7 @@ export class Song extends BaseEntity {
     )
     artists?: Artist[];
 
+    @Field(() => SongRecordType)
     @Column({
         type: 'enum',
         enum: SongRecordType,
@@ -37,4 +43,5 @@ export class Song extends BaseEntity {
     recordType: SongRecordType;
 }
 
+@ObjectType()
 export class PaginatedSongs extends Paginated(Song) { }

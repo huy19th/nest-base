@@ -24,3 +24,9 @@
 `npm run migration:up`
 * Revert latest migration  
 `npm run migration:down`
+
+## GraphQL
+* Install   
+`npm i @apollo/server @nestjs/apollo @nestjs/graphql graphql`
+* Endpoint  
+`localhost:1000/graphql`

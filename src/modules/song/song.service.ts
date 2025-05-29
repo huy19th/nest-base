@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { SongRepository } from './song.repository';
 import { CreateSongDto, FindArtistSongsDto, FindSongsByTitleDto, UpdateSongByIdDto } from './song.dto';
 import { BaseService } from 'src/common/base';

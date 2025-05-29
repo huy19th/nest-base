@@ -9,11 +9,15 @@ import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormConfig } from './config/typeorm.config';
 import { DataSource } from 'typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLConfigService } from './config/graphql.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot(configOptions),
     TypeOrmModule.forRootAsync({ useClass: TypeormConfig }),
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({ driver: ApolloDriver, useClass: GraphQLConfigService }),
     ArtistModule,
     SongModule,
     UserModule,

@@ -10,6 +10,7 @@ import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { PaginatedType } from '../common/dtos';
+import { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class PaginationInterceptor implements NestInterceptor {
@@ -19,6 +20,12 @@ export class PaginationInterceptor implements NestInterceptor {
             const req = context.switchToHttp().getRequest<Request>();
             limit = +(req.query.limit || 10);
             page = +(req.query.page || 1);
+        }
+        else if (context.getType<GqlContextType>() === 'graphql') {
+            const gqlContext = GqlExecutionContext.create(context);
+            const args = gqlContext.getArgs<{ limit: number, page: number }>();
+            limit = args.limit || 10;
+            page = args.page | 1;
         }
         return next.handle().pipe(
             map((data: [any[], number]): PaginatedType<any> => {

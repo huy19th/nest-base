@@ -23,7 +23,6 @@ export class User extends BaseEntity {
 
     @AfterLoad()
     private loadCurrentPassword() {
-        console.log('loadCurrentPassword')
         this.currentPassword = this.password
     }
 
@@ -31,7 +30,6 @@ export class User extends BaseEntity {
     @BeforeUpdate()
     private async hashPassword() {
         const shouldHash = !this.currentPassword || !(await compare(this.password, this.currentPassword));
-        console.log('shouldHash', shouldHash)
         if (shouldHash) {
             this.password = await hash(this.password, 10);
         }

@@ -5,6 +5,7 @@ import { SongService } from './song.service';
 import { SongRepository } from './song.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Song } from './song.entity';
+import { SongResolver } from './song.resolver';
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import { Song } from './song.entity';
         ArtistModule,
     ],
     controllers: [SongController],
-    providers: [SongService, SongRepository],
+    providers: [SongService, SongRepository, SongResolver],
     exports: [SongService]
 })
 export class SongModule { }

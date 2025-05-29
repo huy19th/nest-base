@@ -13,7 +13,6 @@ export class UserService extends BaseService<User> {
     }
 
     createUser(dto: CreateUserDto) {
-        console.log('dto', dto)
         return this.userRepository.createUser(dto)
     }
 }
