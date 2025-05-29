@@ -27,7 +27,7 @@ export class SongController {
 
     @Post()
     create(@Body() body: CreateSongDto) {
-        return this.songService.create(body)
+        return this.songService.createSong(body)
     }
 
     @Put(':id')

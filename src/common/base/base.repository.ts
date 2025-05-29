@@ -1,25 +1,41 @@
+import {
+  DeleteResult,
+  Repository,
+  In,
+  FindOptionsWhere,
+} from 'typeorm';
+import { EntityId } from 'typeorm/repository/EntityId';
 import { BaseEntity } from './base.entity';
+import { NotFoundException } from '@nestjs/common';
 
 export class BaseRepository<T extends BaseEntity> {
 
-  constructor(protected readonly repository: any) {}
+  constructor(protected readonly repository: Repository<T>) { }
 
   findAll(): Promise<T[]> {
+    return this.repository.find()
   }
 
-  findById(id: string): Promise<T> {
+  findById(id: EntityId): Promise<T | null> {
+    return this.repository.findOneBy({ id } as FindOptionsWhere<T>)
   }
 
-  findByIds(ids: string[]): Promise<T[]> {
+  findByIds(ids: EntityId[]): Promise<T[]> {
+    return this.repository.findBy({ id: In(ids) } as FindOptionsWhere<T>)
   }
 
   create(data: Partial<T> | Partial<T>[]): Promise<T> {
+    return this.repository.save(data as T)
   }
 
-  update(id: string, data: any): Promise<any> {
+  async update(id: EntityId, data: Partial<T>): Promise<T> {
+    const entity = await this.findById(id)
+    if (!entity) throw new NotFoundException()
+    Object.assign(entity, data)
+    return entity.save()
   }
 
-  delete(id: string): Promise<any> {
+  delete(id: EntityId): Promise<DeleteResult> {
     return this.repository.delete(id);
   }
 

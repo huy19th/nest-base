@@ -12,3 +12,15 @@
 
 ## Database
 * `docker compose up -d`
+
+## TypeORM
+* Install `typeorm` & database driver  
+`npm i @nestjs/typeorm typeorm pg`
+* Auto generate migration file  
+`npm run migration:generate --name=<migration_name>`
+* Create blank migration file  
+`npm run migration:create --name=<migration_name>`
+* Run all migrations  
+`npm run migration:up`
+* Revert latest migration  
+`npm run migration:down`
