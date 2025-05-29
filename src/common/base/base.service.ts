@@ -1,3 +1,4 @@
+import { FindManyOptions } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { BaseRepository } from './base.repository';
 
@@ -26,5 +27,22 @@ export class BaseService<T extends BaseEntity> {
 
     delete(id: string) {
         return this.repository.delete(id)
+    }
+
+
+    findOneDynamicSelect(
+        where: FindManyOptions<T>['where'],
+        select: FindManyOptions<T>['select']
+    ) {
+        return this.repository.findOneDynamicSelect(where, select)
+    }
+
+    findManyDynamicSelect(
+        where: FindManyOptions<T>['where'],
+        select: FindManyOptions<T>['select'],
+        take: number,
+        page: number
+    ) {
+        return this.repository.findManyDynamicSelect(where, select, take, page)
     }
 }

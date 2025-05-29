@@ -5,14 +5,16 @@ import { Song, PaginatedSongs } from './song.entity';
 import { CreateSongDto, FindArtistSongsDto } from './song.dto';
 import { PaginationInterceptor } from '../../interceptors/pagination.interceptor';
 import { PaginationOptions } from '../../common/dtos';
+import { SelectedFields } from 'src/common/graphql';
 
 @Resolver(() => Song)
 export class SongResolver {
     constructor(private readonly songService: SongService) {}
 
     @Query(() => Song, { nullable: true })
-    async findSongById(@Args('id') songId: string): Promise<Song> {
-        const song = await this.songService.findById(songId);
+    async findSongById(@Args('id') songId: string, @SelectedFields() selectedFields: any): Promise<Song> {
+        console.log(selectedFields)
+        const song = await this.songService.findOneDynamicSelect({id: songId}, selectedFields);
         if (!song) throw new NotFoundException(`Song with id ${songId} not found`);
         return song;
     }

@@ -3,6 +3,7 @@ import {
   Repository,
   In,
   FindOptionsWhere,
+  FindManyOptions,
 } from 'typeorm';
 import { EntityId } from 'typeorm/repository/EntityId';
 import { BaseEntity } from './base.entity';
@@ -48,4 +49,19 @@ export class BaseRepository<T extends BaseEntity> {
   // cusor(options: any): Promise<any> {
   // }
 
+  findOneDynamicSelect(
+    where: FindManyOptions<T>['where'],
+    select: FindManyOptions<T>['select']
+  ) {
+    return this.repository.findOne({ where, select, loadEagerRelations: true })
+  }
+
+  findManyDynamicSelect(
+    where: FindManyOptions<T>['where'],
+    select: FindManyOptions<T>['select'],
+    take: number,
+    page: number
+  ) {
+    return this.repository.find({ where, select, take, skip: take * (page - 1), loadEagerRelations: true });
+  }
 }
