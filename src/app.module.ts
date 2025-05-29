@@ -12,6 +12,7 @@ import { DataSource } from 'typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLConfigService } from './config/graphql.config';
+import { ComplexityPlugin } from './common/graphql';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { GraphQLConfigService } from './config/graphql.config';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ComplexityPlugin],
 })
 export class AppModule implements OnModuleInit {
   private readonly logger = new Logger(AppModule.name)
