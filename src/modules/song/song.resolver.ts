@@ -5,10 +5,11 @@ import { Song, PaginatedSongs } from './song.entity';
 import { CreateSongDto, FindArtistSongsDto } from './song.dto';
 import { PaginationInterceptor } from '../../interceptors/pagination.interceptor';
 import { PaginationOptions } from '../../common/dtos';
+import { GraphQLUpload, FileUpload } from 'graphql-upload-ts';
 
 @Resolver(() => Song)
 export class SongResolver {
-    constructor(private readonly songService: SongService) {}
+    constructor(private readonly songService: SongService) { }
 
     @Query(() => Song, { nullable: true })
     async findSongById(@Args('id') songId: string): Promise<Song> {
@@ -32,5 +33,21 @@ export class SongResolver {
     async createSong(@Args() args: CreateSongDto) {
         const song = await this.songService.create(args);
         return song;
+    }
+
+    @Mutation(() => [String], { nullable: true })
+    uploadSong(
+        @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
+    ) {
+        console.log(file)
+        return this.songService.saveSongs(file)
+    }
+
+    @Mutation(() => [String], { nullable: true })
+    uploadSongs(
+        @Args({ name: 'file', type: () => [GraphQLUpload] }) files: FileUpload[],
+    ) {
+        console.log(files)
+        return this.songService.saveSongs(files)
     }
 }

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { graphqlUploadExpress } from 'graphql-upload-ts';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,6 +17,13 @@ async function bootstrap() {
       enableImplicitConversion: true,
     },
   }));
+  app.use(
+    graphqlUploadExpress({
+      maxFileSize: 25_000_000, // bytes
+      maxFiles: 10,
+      overrideSendResponse: false, // This is necessary for nest.js
+    }),
+  );
   await app.listen(port);
 }
 bootstrap();
