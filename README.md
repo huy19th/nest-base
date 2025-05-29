@@ -30,3 +30,5 @@
 `npm i @apollo/server @nestjs/apollo @nestjs/graphql graphql`
 * Endpoint  
 `localhost:1000/graphql`
+* Subscription   
+`npm i graphql-subscriptions`

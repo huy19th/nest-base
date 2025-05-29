@@ -1,14 +1,19 @@
 import { NotFoundException, ParseUUIDPipe, UseInterceptors } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { PubSub } from 'graphql-subscriptions';
 import { SongService } from './song.service';
 import { Song, PaginatedSongs } from './song.entity';
 import { CreateSongDto, FindArtistSongsDto } from './song.dto';
 import { PaginationInterceptor } from '../../interceptors/pagination.interceptor';
 import { PaginationOptions } from '../../common/dtos';
+import { Topic } from 'src/common/graphql';
 
 @Resolver(() => Song)
 export class SongResolver {
-    constructor(private readonly songService: SongService) {}
+    protected pubSub: PubSub;
+    constructor(private readonly songService: SongService) {
+        this.pubSub = new PubSub();
+    }
 
     @Query(() => Song, { nullable: true })
     async findSongById(@Args('id') songId: string): Promise<Song> {
@@ -32,5 +37,24 @@ export class SongResolver {
     async createSong(@Args() args: CreateSongDto) {
         const song = await this.songService.create(args);
         return song;
+    }
+
+    @Subscription(
+        () => String,
+        {
+            // filter which evvent should publish to client, publish if filter function returns true
+            filter: (
+                payload: { title: string },
+                variable: { title: string }
+            ) => {
+                console.log(payload, variable)
+                return payload.title.toLowerCase().includes(variable.title.toLowerCase())
+            },
+            // mutate event payload with resolve function
+            resolve: value => value.title
+        }
+    )
+    newSongAdded(@Args('title') title: string) {
+        return this.pubSub.asyncIterableIterator(Topic.NewSongAdded)
     }
 }
