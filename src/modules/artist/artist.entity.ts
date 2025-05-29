@@ -8,11 +8,13 @@ import { BaseEntity } from '../../common/base';
 import { Paginated } from '../../common/dtos';
 import { Song } from '../song/song.entity';
 import { ArtistGender } from './artist.constant';
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ObjectType } from '@nestjs/graphql';
+import { GqlDirective } from 'src/common/graphql';
 
 @ObjectType()
 @Entity()
 export class Artist extends BaseEntity {
+    @Directive(GqlDirective.Proper)
     @Field()
     @Column({
         type: 'varchar',
