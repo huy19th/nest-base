@@ -9,3 +9,7 @@
 
 ## Config
 * `npm i @nestjs/config`
+
+## BullMQ
+* `npm i @nestjs/bullmq bullmq`
+* run redis for bullmq: `docker compose up -d`
