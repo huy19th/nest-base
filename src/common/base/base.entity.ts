@@ -1,9 +1,4 @@
-export class BaseEntity {
-    id: string;
+import { Schema } from '@nestjs/mongoose';
 
-    createdAt: Date;
-
-    updatedAt: Date;
-
-    deletedAt: Date;
-}
+@Schema({timestamps: true})
+export class BaseEntity {}

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { BaseRepository } from 'src/common/base';
-import { Artist } from './artist.entity';
-import { FindArtistsByNameDto } from './artist.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { BaseRepository } from './base.repository';
+import { Artist } from 'src/modules/artist/artist.entity';
+
 
 @Injectable()
 export class ArtistRepository extends BaseRepository<Artist> {
@@ -13,6 +13,4 @@ export class ArtistRepository extends BaseRepository<Artist> {
         super(song)
     }
 
-    findByName(dto: FindArtistsByNameDto) {
-    }
 }

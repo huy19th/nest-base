@@ -1,26 +1,39 @@
 import { BaseEntity } from './base.entity';
+import { Model, HydratedDocument, RootFilterQuery } from 'mongoose';
 
 export class BaseRepository<T extends BaseEntity> {
+  private model: Model<T>
 
-  constructor(protected readonly repository: any) {}
-
-  findAll(): Promise<T[]> {
+  constructor(model: Model<T>) {
+    this.model = model;
   }
 
-  findById(id: string): Promise<T> {
+  findAll(selectFields?: string[]): Promise<HydratedDocument<T>[]> {
+    return this.model.find({}, selectFields);
   }
 
-  findByIds(ids: string[]): Promise<T[]> {
+  findById(id: string, selectFields?: string[]): Promise<HydratedDocument<T> | null> {
+    return this.model.findById(id, selectFields);
   }
 
-  create(data: Partial<T> | Partial<T>[]): Promise<T> {
+  findByIds(ids: string[], selectFields?: string[]): Promise<HydratedDocument<T>[]> {
+    return this.model.find({ id: { $in: ids } }, selectFields);
   }
 
-  update(id: string, data: any): Promise<any> {
+  create(data: Partial<T> | Partial<T>[]): Promise<HydratedDocument<T> | HydratedDocument<T>[]> {
+    return this.model.create(data);
   }
 
-  delete(id: string): Promise<any> {
-    return this.repository.delete(id);
+  upsert(filter: RootFilterQuery<T>, data: Partial<T>): Promise<HydratedDocument<T> | null> {
+    return this.model.findOneAndUpdate(filter, data, { upsert: true })
+  }
+
+  update(id: string, data: Partial<T>): Promise<HydratedDocument<T> | null> {
+    return this.model.findByIdAndUpdate(id, data, { new: true });
+  }
+
+  async delete(id: string): Promise<HydratedDocument<T> | null> {
+    return this.model.findByIdAndDelete(id)
   }
 
   // upsert(id: string, data: Partial<T>): Promise<any> {

@@ -4,6 +4,7 @@ import {
   IsPort,
   validateSync,
   IsOptional,
+  IsString,
 } from 'class-validator';
 import { ConfigModuleOptions } from '@nestjs/config';
 
@@ -22,6 +23,10 @@ class EnvironmentVariables {
   @IsOptional()
   @IsPort()
   PORT: string = '1000';
+
+  @IsOptional()
+  @IsString()
+  MONGO_URI: string = `mongodb://nest-base:nest-base@localhost:1002` // format: mongodb://<username>:<password>@<host>:<port>/<database>
 }
 
 function validate(config: Record<string, unknown>) {
@@ -40,6 +45,9 @@ function validate(config: Record<string, unknown>) {
       port: env.PORT,
       node_env: env.NODE_ENV,
     },
+    mongo: {
+      uri: env.MONGO_URI,
+    }
   };
 }
 

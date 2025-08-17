@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ArtistRepository } from './artist.repository';
-import { CreateArtistDto, FindArtistsByNameDto } from './artist.dto';
+import { FindArtistsByNameDto } from './artist.dto';
 import { BaseService } from 'src/common/base';
 import { Artist } from './artist.entity';
 
