@@ -4,6 +4,7 @@ import {
   IsPort,
   validateSync,
   IsOptional,
+  IsString,
 } from 'class-validator';
 import { ConfigModuleOptions } from '@nestjs/config';
 
@@ -22,6 +23,18 @@ class EnvironmentVariables {
   @IsOptional()
   @IsPort()
   PORT: string = '1000';
+
+  @IsOptional()
+  @IsString()
+  SLACK_SEND_MESSAGE_URL: string = 'https://slack.com/api/chat.postMessage';
+
+  @IsOptional()
+  @IsString()
+  SLACK_GET_CHANNELS_URL: string = 'https://slack.com/api/conversations.list';
+
+  @IsOptional()
+  @IsString()
+  SLACK_BOT_TOKEN: string;
 }
 
 function validate(config: Record<string, unknown>) {
@@ -39,6 +52,10 @@ function validate(config: Record<string, unknown>) {
     server: {
       port: env.PORT,
       node_env: env.NODE_ENV,
+    },
+    slack: {
+      get_channels_url: env.SLACK_GET_CHANNELS_URL,
+      bot_token: env.SLACK_BOT_TOKEN,
     },
   };
 }
