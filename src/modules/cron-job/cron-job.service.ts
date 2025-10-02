@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from "@nestjs/common";
+import { BadRequestException, Injectable, Logger, OnModuleInit } from "@nestjs/common";
 import { Cron, CronExpression, Interval, SchedulerRegistry, Timeout } from "@nestjs/schedule";
 import { CronJob } from 'cron';
 
@@ -18,13 +18,15 @@ export class CronJobService implements OnModuleInit {
             'NotifyEvery30s',
             setInterval(() => this.handleInterval2(), 1000 * 30)
         );
+        const job2 = new CronJob(
+            '10 * * * * *',
+            () => this.handleCron2()
+        )
+        job2.start();
         this.schedulerRegistry.addCronJob(
             'notifications2',
-            new CronJob(
-                '10 * * * * *',
-                () => { this.handleCron2() }
-            )
-        )
+            job2
+        );
     }
 
     @Cron(
@@ -36,7 +38,6 @@ export class CronJobService implements OnModuleInit {
              * Any new scheduled executions that occur while the current cronjob is running will be skipped entirely.
              */
             waitForCompletion: false,
-            
         }
     )
     handleCron() {
@@ -63,5 +64,37 @@ export class CronJobService implements OnModuleInit {
 
     handleCron2() {
         this.logger.debug('Called when the second is 10');
+    }
+
+    getListCronJobs() {
+        return this.schedulerRegistry.getCronJobs().values();
+    }
+
+    getListIntervals() {
+        return this.schedulerRegistry.getIntervals();
+    }
+
+    getListTimeout() {
+        return this.schedulerRegistry.getTimeouts();
+    }
+
+    getCronJobByName(name: string) {
+        return this.schedulerRegistry.getCronJob(name);
+    }
+
+    getIntervalByName(name: string) {
+        return this.schedulerRegistry.getInterval(name);
+    }
+
+    getTimeoutByName(name: string) {
+        return this.schedulerRegistry.getTimeout(name);
+    }
+
+    updateCronJob(name: string, cron: string): CronJob {
+        const cronJob = this.getCronJobByName(name);
+        if (!cronJob) throw new BadRequestException('Cron job not found');
+        cronJob.setTime({
+            so
+        })
     }
 }
