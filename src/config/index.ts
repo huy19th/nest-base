@@ -22,6 +22,13 @@ class EnvironmentVariables {
   @IsOptional()
   @IsPort()
   PORT: string = '1000';
+
+  @IsOptional()
+  @IsPort()
+  REDIS_PORT: string = '1003';
+
+  @IsOptional()
+  REDIS_HOST: string = '127.0.0.1';
 }
 
 function validate(config: Record<string, unknown>) {
@@ -39,6 +46,10 @@ function validate(config: Record<string, unknown>) {
     server: {
       port: env.PORT,
       node_env: env.NODE_ENV,
+    },
+    redis: {
+      port: env.REDIS_PORT,
+      host: env.REDIS_HOST,
     },
   };
 }
