@@ -24,3 +24,7 @@
 `npm run migration:up`
 * Revert latest migration  
 `npm run migration:down`
+
+## pg_cron
+* [Github](https://github.com/citusdata/pg_cron)
+* [Setup Guide](https://dev.to/shrsv/supercharge-your-postgres-docker-setup-with-extensions-3leh)

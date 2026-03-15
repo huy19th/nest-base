@@ -9,6 +9,7 @@ import { UserModule } from './modules/user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeormConfig } from './config/typeorm.config';
 import { DataSource } from 'typeorm';
+import { CacheModule } from './modules/cache/cache.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { DataSource } from 'typeorm';
     ArtistModule,
     SongModule,
     UserModule,
+    CacheModule,
   ],
   controllers: [AppController],
   providers: [AppService],

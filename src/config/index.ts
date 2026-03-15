@@ -30,7 +30,7 @@ class EnvironmentVariables {
 
   @IsOptional()
   @IsPort()
-  PG_PORT: string = '1001';
+  PG_PORT: string = '1004';
 
   @IsOptional()
   @IsString()

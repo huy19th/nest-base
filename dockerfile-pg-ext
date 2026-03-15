@@ -1,0 +1,15 @@
+FROM postgres:18-bookworm
+# Install build dependencies and pg_cron extension
+RUN apt-get update \
+    # -y: auto confirm, --no-install-recommends: don't install recommended packages
+    && apt-get install -y --no-install-recommends \
+        # PostgreSQL development headers provide /usr/include/postgresql
+        # postgresql-server-dev-18 \
+        postgresql-18-cron \
+        # install compiler tools: gcc, g++, make, libc-dev
+        # build-essential \
+        # Allow secure HTTPS downloads.
+        # ca-certificates \
+        # Allow cloing git repo
+        # git \
+    && rm -rf /var/lib/apt/lists/*
