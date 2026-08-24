@@ -1,4 +1,5 @@
 import { Type } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNumber, IsOptional } from 'class-validator';
 
 export class PaginationOptions {
@@ -23,6 +24,7 @@ export interface PaginatedType<T> {
 
 export function Paginated<T>(_classRef: Type<T>): Type<PaginatedType<T>> {
     abstract class Paginated implements PaginatedType<T> {
+        @ApiProperty({ isArray: true, type: _classRef })
         items: T[];
 
         totalItems: number;

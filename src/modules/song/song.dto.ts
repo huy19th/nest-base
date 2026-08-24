@@ -40,7 +40,7 @@ export class FindSongsByTitleDto extends PaginationOptions {
 export class FindArtistSongsDto {
     @IsString()
     @IsOptional()
-    @Transform(({ value }: { value: string }) => value?.toLowerCase().trim())
+    // @Transform(({ value }: { value: string }) => value?.toLowerCase().trim())
     title: string;
 }
 

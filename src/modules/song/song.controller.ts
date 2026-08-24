@@ -19,6 +19,8 @@ import {
 import { SongService } from './song.service';
 import { PaginationInterceptor } from '../../interceptors';
 import { PaginationOptions } from '../../common/dtos';
+import { ApiResponse } from '@nestjs/swagger';
+import { PaginatedSongs } from './song.entity';
 
 @Controller('song')
 export class SongController {
@@ -35,12 +37,14 @@ export class SongController {
         return this.songService.findById(songId)
     }
 
+    @ApiResponse({type: () => PaginatedSongs})
     @UseInterceptors(PaginationInterceptor)
     @Get()
     findMany(@Query() query: FindSongsByTitleDto) {
         return this.songService.findMany(query)
     }
 
+    @ApiResponse({type: () => PaginatedSongs})
     @UseInterceptors(PaginationInterceptor)
     @Get('artist/:artistId')
     findArtistSongs(

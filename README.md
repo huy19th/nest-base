@@ -24,3 +24,16 @@
 `npm run migration:up`
 * Revert latest migration  
 `npm run migration:down`
+
+## Swagger
+* Install swagger   
+`npm i @nestjs/swagger`
+* DTO convention
+  * Optional field: add `?` after property
+  * Required field: default
+  * Default value: just add default value like normal class
+* Swagger not auto generating schema ? Make sure to add file prefix to `nest-cli.json`
+* Import `swagger.json` to postman
+  * Click `Import` on top of sidebar
+  * Drag & drop `swagger.json`
+  * Select option `OpenAPI`

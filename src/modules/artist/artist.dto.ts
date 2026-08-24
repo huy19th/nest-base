@@ -31,13 +31,13 @@ export class UpdateArtistDto {
     @IsString()
     @IsNotEmpty()
     @IsOptional()
-    name: string;
+    name?: string;
 
     @IsEnum(ArtistGender)
     @IsOptional()
-    gender: ArtistGender;
+    gender?: ArtistGender;
 
     @IsDate()
     @IsOptional()
-    debut: Date;
+    debut?: Date;
 }
