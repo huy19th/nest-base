@@ -1,0 +1,24 @@
+name: nest-base
+
+services:
+  pg:
+    image: postgres:18-alpine
+    ports:
+      - 1001:5432
+    environment:
+      POSTGRES_PASSWORD: nest-base
+      POSTGRES_USER: nest-base
+      POSTGRES_DB: postgres
+
+  mongo:
+    image: mongo:7.0-jammy
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: nest-base
+      MONGO_INITDB_ROOT_PASSWORD: nest-base
+    ports:
+      - 1002:27017
+
+  redis:
+    image: redis:8-alpine
+    ports:
+      - 1003:6379
